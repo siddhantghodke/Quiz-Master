@@ -513,10 +513,6 @@ def create_db():
         print('Admin already Exists')
     print('database created')
 
-@app.cli.command('db-drop_all')
-def drop_db():
-    db.drop_all()
-    return ('database deleted')
 
 
  
