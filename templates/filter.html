@@ -1,0 +1,29 @@
+{% extends "base.html" %} {% block title %} Search Results{% endblock %} {%
+block content %}
+<h1>Search Results</h1>
+
+<div class="d-flex flex-wrap gap-5 ms-5">
+  {% for item in data %}
+  <div class="card" style="width: 18rem">
+    <img src="{{ item.image }}" class="card-img-top" alt="cant load image" />
+    <div class="card-body">
+      <h5 class="card-title">{{ item.name }}</h5>
+      <ul>
+        <li>Date of Quiz: {{ item.date_of_quiz }}</li>
+        <li>Time Duration: {{ item.time_duration }}</li>
+        <li>Description: {{ item.description }}</li>
+        <li>Chapter: {{ item.chapter.name }}</li>
+        <li>Subject: {{ item.chapter.subject.name }}</li>
+      </ul>
+    </div>
+    <div class="card-body">
+      <a
+        href="{{ url_for('attempt_quiz', id = item.id) }}"
+        class="btn btn-outline-primary"
+        >Attempt this Quiz</a
+      >
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

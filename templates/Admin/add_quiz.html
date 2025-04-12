@@ -1,0 +1,75 @@
+{% extends "Admin/adminLayout.html" %} {% block title %}Add a new Quiz {%
+endblock %}{% block head %}
+<link rel="stylesheet" href="/static/add_forms.css" />
+{% endblock %} {% block content %}
+<div class="container">
+  <div class="form-box">
+    <h2>Add a new Quiz</h2>
+    <form action="/add_quiz" method="post">
+      {{ form.hidden_tag() }}
+      <div class="input-group">
+        {{ form.quiz_name.label }} {{ form.quiz_name }} {% if
+        form.quiz_name.errors %}
+        <ul class="errors">
+          {% for error in form.quiz_name.errors %}
+          <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </div>
+      <div class="input-group">
+        {{ form.date_of_quiz.label }} {{ form.date_of_quiz }} {% if
+        form.date_of_quiz.errors %}
+        <ul class="errors">
+          {% for error in form.date_of_quiz.errors %}
+          <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </div>
+      <div class="input-group">
+        {{ form.time_duration.label }} {{ form.time_duration }} {% if
+        form.time_duration.errors %}
+        <ul class="errors">
+          {% for error in form.time_duration.errors %}
+          <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </div>
+      <div class="input-group">
+        {{ form.description.label }} {{ form.description }} {% if
+        form.description.errors %}
+        <ul class="errors">
+          {% for error in form.description.errors %}
+          <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </div>
+
+      <div class="input-group">
+        {{ form.image.label }} {{ form.image }} {% if form.image.errors %}
+        <ul class="errors">
+          {% for error in form.image.errors %}
+          <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </div>
+      <div class="input-group">
+        {{ form.chapter_id.label }} {{ form.chapter_id }} {% if
+        form.chapter_id.errors %}
+        <ul class="errors">
+          {% for error in form.chapter_id.errors %}
+          <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+
+      <button class="submit-btn">{{ form.submit}}</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

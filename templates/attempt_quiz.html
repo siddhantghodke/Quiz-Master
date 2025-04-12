@@ -1,0 +1,154 @@
+{% extends "base.html" %} {% block title %}Attempt Quiz{% endblock %} {% block
+content %} {% block head %}
+<style>
+  .timer-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 120px;
+    height: 50px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+    background: linear-gradient(135deg, #82f053, #91f388);
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    transition: all 0.3s ease-in-out;
+  }
+
+  /* When time is running low, add a glowing effect */
+  .timer-box.low-time {
+    animation: pulse 1s infinite alternate;
+    background: linear-gradient(135deg, #ff3d00, #ff8c00);
+  }
+  body {
+    margin: 0;
+    background-color: #f9f9f9;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: "Arial", sans-serif;
+    color: #333;
+  }
+  .content-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+  }
+  .question-container {
+    border: 2px solid #4caf50;
+    padding: 30px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    background: white;
+    max-width: 800px;
+    width: 100%;
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  h1 {
+    text-align: center;
+    font-size: 2em;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #4caf50;
+    padding-bottom: 10px;
+  }
+  .question {
+    margin-bottom: 25px;
+  }
+  .question h4 {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+  }
+  label {
+    display: block;
+    margin: 5px 0;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  label:hover {
+    transform: translateX(5px);
+  }
+  .btn {
+    display: block;
+    margin: 30px auto 0;
+    padding: 10px 20px;
+    font-size: 1em;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  .btn:hover {
+    background-color: #45a049;
+  }
+  @keyframes pulse {
+    from {
+      box-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
+    }
+    to {
+      box-shadow: 0 0 20px rgba(255, 0, 0, 1);
+    }
+  }
+</style>
+{% endblock %}
+
+<div class="timer-box">
+  <span id="timer">00:00</span>
+</div>
+
+<div class="content-wrapper">
+  <div class="question-container">
+    <h1>{{ quiz.name }}</h1>
+    <hr />
+    <form id="quizForm" method="post">
+      {% for question in questions %}
+      <div class="question">
+        <h4>Q. {{ question.question }}</h4>
+        <input type="radio" name="question_{{ question.id }}" value="1" />a. {{
+        question.option1 }}<br />
+        <input type="radio" name="question_{{ question.id }}" value="2" />b. {{
+        question.option2 }}<br />
+        <input type="radio" name="question_{{ question.id }}" value="3" />c. {{
+        question.option3 }}<br />
+        <input type="radio" name="question_{{ question.id }}" value="4" />d. {{
+        question.option4 }}<br />
+      </div>
+      {% endfor %}
+      <button class="btn btn-outline-success" type="submit">Submit Quiz</button>
+    </form>
+  </div>
+</div>
+<script>
+  const quizDuration = {{ quiz.time_duration }};
+  let timeLeft = quizDuration;
+
+  function updateTimer(){
+    let minutes = Math.floor(timeLeft / 60)
+    let seconds = timeLeft % 60;
+    document.getElementById('timer').textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+    if (timeLeft == 0){
+      clearInterval(timeInterval);
+      alert('Time is up!');
+      document.getElementById('quizForm').submit();
+    }
+    else{
+      timeLeft--;
+    }
+
+  }
+  const timeInterval = setInterval(updateTimer, 1000);
+</script>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends "Admin/adminLayout.html" %} {% block content %} {% block head %}
+<link rel="stylesheet" href="/static/tables.css" />
+{% endblock %}
+<h2>Manage Scores</h2>
+
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Quiz id</th>
+        <th>User id</th>
+        <th>Time</th>
+        <th>Total Score</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for score in score %}
+      <tr>
+        <td>{{ score.id }}</td>
+        <td>{{ score.quiz_id }}</td>
+        <td>{{ score.user_id }}</td>
+        <td>{{ score.time_stamp }}</td>
+        <td>{{ score.total_score }}</td>
+        <td>
+          <form
+            action="{{ url_for('delete_score', score_id=score.id) }}"
+            method="post"
+          >
+            <button
+              class="btn btn-danger"
+              onclick="return confirm('Are you sure you want to delete this Score?')"
+            >
+              Delete
+            </button>
+          </form>
+        </td>
+
+        {% endfor %}
+      </tr>
+    </tbody>
+  </table>
+</div>
+{% endblock %}

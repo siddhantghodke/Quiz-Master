@@ -1,0 +1,110 @@
+{% extends "Admin/adminLayout.html" %} {% block title %}Admin Dashboard{%
+endblock %} {% block head %} {{ super() }}
+
+<style>
+  .chart-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+  }
+
+  .chart-box {
+    width: 45%;
+    max-width: 500px;
+    height: 350px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .chart-box canvas {
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  @media (max-width: 768px) {
+    .chart-box {
+      width: 90%;
+    }
+  }
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+{% endblock %} {% block content %}
+
+<h2 class="text-center mt-4">📊 Admin Dashboard</h2>
+
+<div class="container">
+  <div class="chart-container">
+    <!-- Bar Chart -->
+    <div class="chart-box">
+      <canvas id="averageScoresChart"></canvas>
+    </div>
+
+    <!-- Pie Chart -->
+    <div class="chart-box">
+      <canvas id="completionRatesChart"></canvas>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+      // Bar Chart (Average Scores)
+      const ctx = document.getElementById('averageScoresChart').getContext('2d');
+
+      new Chart(ctx, {
+          type: 'bar',
+          data: {
+              labels: {{ quiz_names | tojson | safe }},
+              datasets: [{
+                  label: 'Average Score',
+                  data: {{ average_scores | tojson | safe }},
+                  backgroundColor: 'rgba(54, 162, 235, 0.6)', // Blue Bars
+                  borderColor: 'rgba(54, 162, 235, 1)',
+                  borderWidth: 1
+              }]
+          },
+          options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              scales: {
+                  y: {
+                      beginAtZero: true
+                  }
+              }
+          }
+      });
+
+      // Pie Chart (Completion Rates)
+      const ctx1 = document.getElementById('completionRatesChart').getContext('2d');
+
+      new Chart(ctx1, {
+          type: 'pie',
+          data: {
+              labels: {{ quiz_names | tojson | safe }},
+              datasets: [{
+                  label: 'Completion Rate',
+                  data: {{ completion_rates | tojson | safe }},
+                  backgroundColor: [
+                      "#ff6384", "#36a2eb", "#ffce56", "#4bc0c0", "#9966ff"
+                  ],
+                  hoverOffset: 4
+              }]
+          },
+          options: {
+              responsive: true,
+              maintainAspectRatio: false
+          }
+      });
+  });
+</script>
+
+{% endblock %}

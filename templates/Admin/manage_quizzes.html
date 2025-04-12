@@ -1,0 +1,72 @@
+{% extends "Admin/adminLayout.html" %} {% block content %}
+<style>
+  .card-img-top {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 12px;
+  }
+  h2 {
+    font-size: 3rem; /* Bigger text */
+    font-weight: bold;
+
+    color: #100301; /* Eye-catching color */
+
+    letter-spacing: 3px;
+    text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3); /* Soft shadow */
+    font-family: "Poppins", sans-serif; /* Use Google Fonts for a stylish look */
+  }
+</style>
+
+<h2>Manage Quizzes</h2>
+<a href="/add_quiz" class="btn btn-primary">Create a Quiz</a>
+<div class="search-form" style="float: right">
+  <form action="/search_quiz" method="POST">
+    <input type="text" name="searchkey" placeholder="Search..." required />
+    <button type="submit">Search</button>
+  </form>
+</div>
+<hr />
+
+<div class="d-flex flex-wrap gap-5 ms-5">
+  <!-- Flex container added here -->
+  {% for quiz in quizzes %}
+  <div class="card" style="width: 18rem">
+    <img src="{{ quiz.image }}" class="card-img-top" alt="cant load image" />
+    <div class="card-body">
+      <h5 class="card-title">{{ quiz.name }}</h5>
+      <ul>
+        <li>Quiz ID: {{ quiz.id }}</li>
+        <li>Date of Quiz: {{ quiz.date_of_quiz }}</li>
+        <li>Time Duration: {{ quiz.time_duration // 60 }} minutes</li>
+        <li>Description: {{ quiz.description }}</li>
+        <li>Chapter: {{ quiz.chapter.name }}</li>
+        <li>Subject: {{ quiz.chapter.subject.name }}</li>
+      </ul>
+    </div>
+    <div class="card-body">
+      <a
+        href="{{ url_for('edit_quiz', id=quiz.id) }}"
+        class="btn btn-outline-primary"
+        >Edit</a
+      >
+
+      <a
+        href='{{ url_for("manage_questions", quiz_id = quiz.id) }}'
+        class="btn btn-outline-primary"
+        >Manage questions</a
+      >
+
+      <form action="{{ url_for('delete_quiz', id=quiz.id) }}" method="post">
+        <button
+          class="btn btn-outline-danger"
+          onclick="return confirm('Are you sure you want to delete this Quiz?')"
+        >
+          Delete
+        </button>
+      </form>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

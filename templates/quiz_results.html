@@ -1,0 +1,78 @@
+{% extends "base.html" %} {% block title %}Results{% endblock %} {% block head
+%}
+<style>
+  /* White-Themed Quiz Results */
+  body {
+    margin: 0;
+    padding: 0;
+    background: #ffffff; /* Clean white background */
+    font-family: "Poppins", sans-serif; /* Modern font */
+    color: #333; /* Dark grey for better readability */
+  }
+
+  /* Center the quiz results only */
+  .quiz-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh; /* Avoid breaking the navbar */
+  }
+
+  .quiz-results {
+    background: linear-gradient(145deg, #f9f9f9, #ffffff);
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 500px;
+    width: 90%;
+    box-sizing: border-box; /* Ensure padding is included */
+  }
+
+  .quiz-results h1 {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    background: linear-gradient(90deg, #4e9eff, #8a63ff);
+    -webkit-background-clip: text;
+    color: transparent; /* Gradient text for style */
+  }
+
+  .quiz-info p {
+    font-size: 1.4rem;
+    margin: 15px 0;
+  }
+
+  .quiz-info span {
+    font-weight: 600;
+    color: #4e9eff; /* Soft blue for important values */
+  }
+
+  /* Responsive Design */
+  @media (max-width: 600px) {
+    .quiz-results {
+      padding: 20px;
+    }
+
+    .quiz-results h1 {
+      font-size: 2rem;
+    }
+
+    .quiz-info p {
+      font-size: 1.2rem;
+    }
+  }
+</style>
+{% endblock %} {% block content %}
+<div class="quiz-container">
+  <div class="quiz-results">
+    <h1>Quiz Results</h1>
+    <div class="quiz-info">
+      <p class="quiz-name">Quiz Name: <span>{{ quiz.name }}</span></p>
+      <p class="quiz-score">
+        Total Score:
+        <span>{{ scores.total_score }} / {{ quiz.questions | length }}</span>
+      </p>
+    </div>
+  </div>
+</div>
+{% endblock %}

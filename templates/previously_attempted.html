@@ -1,0 +1,27 @@
+{% extends "base.html" %} {% block title %} Previously Attempted{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="/static/tables.css" />
+{% endblock %} {% block content %}
+<h2>Your Previous Attempts</h2>
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>Quiz Name</th>
+        <th>Attempt Time</th>
+        <th>Total Score</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for score in scores %}
+      <tr>
+        <th>{{ score.quiz.name }}</th>
+        <th>{{ score.time_stamp.strftime("%d-%m-%Y %H:%M") }}</th>
+        <th>{{ score.total_score }}</th>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}

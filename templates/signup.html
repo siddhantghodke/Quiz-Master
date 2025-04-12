@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up</title>
+   <style>
+      /* General Reset */
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        height: 100%;
+        font-family: "Arial", sans-serif;
+        background: linear-gradient(to bottom, #d6ebff, #ffffff);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      /* Container for the login card */
+      .signup-container {
+        background: rgba(255, 255, 255, 0.8);
+        border-radius: 20px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        padding: 40px;
+        max-width: 400px;
+        width: 100%;
+        text-align: center;
+        backdrop-filter: blur(20px);
+      }
+
+      /* Main heading */
+      h2 {
+        margin: 10px 0;
+        font-size: 1.8em;
+        color: #333;
+      }
+
+      /* Subtitle */
+      p {
+        color: #666;
+        font-size: 0.9em;
+        margin-bottom: 30px;
+      }
+
+      /* Input Fields */
+      .input-group {
+        display: flex;
+        align-items: center;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 10px;
+        margin-bottom: 15px;
+        background: white;
+      }
+
+      .input-group input {
+        border: none;
+        outline: none;
+        flex: 1;
+        padding: 8px;
+        font-size: 14px;
+        background: transparent;
+      }
+
+      .input-group span {
+        margin-right: 10px;
+        color: #666;
+      }
+
+      /* Submit Button */
+      .btn {
+        width: 100%;
+        padding: 12px;
+        border: none;
+        border-radius: 8px;
+        background: black;
+        color: white;
+        font-size: 1em;
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+
+      .btn:hover {
+        background: #333;
+      }
+    </style>
+  </head>
+  <body>
+    
+    <div class="signup-container">
+      <h1>Sign Up</h1>
+      <form action="/signup" method="post">
+        {{ form.hidden_tag() }}
+        <div class="input-group">
+          <span>👤</span>
+          {{ form.username.label }}:
+          {{ form.username }}
+          {% if form.username.errors %}
+    <ul class="errors">
+    {% for error in form.username.errors %}
+        <li>{{ error }}</li>
+    {% endfor %}
+    </ul>
+{% endif %}
+        </div>
+        <div class="input-group">
+                    <span>📧</span>
+
+          {{ form.email.label }}:
+          {{ form.email }}
+          {% if form.email.errors %}
+    <ul class="errors">
+    {% for error in form.email.errors %}
+        <li>{{ error }}</li>
+    {% endfor %}
+    </ul>
+{% endif %}
+        </div>
+        <div class="input-group">
+                    <span>🔒</span>
+
+          {{ form.password.label }}
+          {{ form.password }}
+          {% if form.password.errors %}
+    <ul class="errors">
+    {% for error in form.password.errors %}
+        <li>{{ error }}</li>
+    {% endfor %}
+    </ul>
+{% endif %}
+        </div>
+        <div class="input-group">
+                    <span>🔐</span>
+
+          {{ form.confirm_password.label }}
+          {{ form.confirm_password }}
+          {% if form.confirm_password.errors %}
+          <ul class="errors">
+    {% for error in form.confirm_password.errors %}
+        <li>{{ error }}</li>
+    {% endfor %}
+    </ul>
+{% endif %}
+        </div>
+        <div>
+          <button  class="btn">
+
+            {{ form.submit}}
+          </button>
+          <br>
+          <br>
+          <a href="/login" class="login-link">Existing User? Login</a>
+      <br />
+        </div>
+        
+    </div>
+  </body>
+</html>

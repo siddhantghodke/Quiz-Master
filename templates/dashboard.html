@@ -1,0 +1,50 @@
+{% extends "base.html" %} {% block title %} User Dashboard{% endblock %} {%
+block head %}
+<style>
+  .card-img-top {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 12px;
+  }
+  h2 {
+    font-size: 3rem; /* Bigger text */
+    font-weight: bold;
+
+    color: #100301; /* Eye-catching color */
+    text-align: center;
+    letter-spacing: 3px;
+    text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3); /* Soft shadow */
+    font-family: "Poppins", sans-serif; /* Use Google Fonts for a stylish look */
+  }
+</style>
+{% endblock %} {% block content %}
+<br />
+<h2>Quizzes</h2>
+<hr />
+<div class="d-flex flex-wrap gap-5 ms-5">
+  <!-- Flex container added here -->
+  {% for q in quiz %}
+  <div class="card" style="width: 18rem">
+    <img src="{{ q.image }}" class="card-img-top" alt="cant load image" />
+    <div class="card-body">
+      <h5 class="card-title">{{ q.name }}</h5>
+      <ul>
+        <li>Date of Quiz: {{ q.date_of_quiz }}</li>
+        <li>Time Duration: {{ q.time_duration // 60 }} minutes</li>
+        <li>Description: {{ q.description }}</li>
+        <li>Chapter: {{ q.chapter.name }}</li>
+        <li>Subject: {{ q.chapter.subject.name }}</li>
+      </ul>
+    </div>
+    <div class="card-body">
+      <a
+        href="{{ url_for('attempt_quiz', id = q.id) }}"
+        class="btn btn-outline-primary"
+        >Attempt this Quiz</a
+      >
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

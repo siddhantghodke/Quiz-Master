@@ -1,0 +1,71 @@
+{% extends "Admin/adminLayout.html" %} {% block title %}Edit Queston {% endblock
+%}{% block head %}
+<link rel="stylesheet" href="/static/add_forms.css" />
+{% endblock %} {% block content %}
+<div class="container">
+  <div class="form-box">
+    <h2>Edit Question</h2>
+    <form method="post">
+      {{ form.hidden_tag() }}
+      <div class="input-group">
+        {{ form.question.label }} {{ form.question }} {% if form.question.errors
+        %}
+        <ul class="errors">
+          {% for error in form.question.errors %}
+          <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </div>
+      <div class="input-group">
+        {{ form.option1.label }} {{ form.option1 }} {% if form.option1.errors %}
+        <ul class="errors">
+          {% for error in form.option1.errors %}
+          <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </div>
+      <div class="input-group">
+        {{ form.option2.label }} {{ form.option2 }} {% if form.option2.errors %}
+        <ul class="errors">
+          {% for error in form.option2.errors %}
+          <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </div>
+      <div class="input-group">
+        {{ form.option3.label }} {{ form.option3 }} {% if form.option3.errors %}
+        <ul class="errors">
+          {% for error in form.option3.errors %}
+          <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </div>
+      <div class="input-group">
+        {{ form.option4.label }} {{ form.option4 }} {% if form.option4.errors %}
+        <ul class="errors">
+          {% for error in form.option4.errors %}
+          <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </div>
+      <div class="input-group">
+        {{ form.answer.label }} {{ form.answer }} {% if form.answer.errors %}
+        <ul class="errors">
+          {% for error in form.answer.errors %}
+          <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </div>
+
+      <button class="submit-btn">{{ form.submit}}</button>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

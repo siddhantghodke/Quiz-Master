@@ -1,0 +1,40 @@
+h2 {
+  font-size: 3rem; /* Bigger text */
+  font-weight: bold;
+
+  color: #100301; /* Eye-catching color */
+
+  letter-spacing: 3px;
+  text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3); /* Soft shadow */
+  font-family: "Poppins", sans-serif; /* Use Google Fonts for a stylish look */
+}
+.table-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+}
+table {
+  width: 60%;
+  border-collapse: collapse;
+  background: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  text-align: center;
+  border: 1px solid black;
+  max-width: 1200px;
+}
+th,
+td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+th {
+  background: #212222;
+  color: white;
+}
+tr:hover {
+  background: #f1f1f1;
+}

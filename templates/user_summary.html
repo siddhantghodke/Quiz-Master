@@ -1,0 +1,164 @@
+{% extends "base.html" %} {% block title %}User Summary{% endblock %} {% block
+head %}
+<!-- Load Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+  .charts-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px; /* Space between charts */
+    flex-wrap: wrap; /* Ensures responsiveness */
+  }
+
+  .chart-container {
+    flex: 1;
+    min-width: 400px;
+    max-width: 500px;
+    height: 400px; /* Fixes indefinite height issue */
+  }
+
+  .chart-container canvas {
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+ .user-profile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.profile-card {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 350px;
+  text-align: center;
+}
+
+.profile-card h2 {
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.info-item {
+  font-size: 16px;
+  color: #555;
+  display: flex;
+  justify-content: space-between;
+  padding: 8px;
+  background: #f9f9f9;
+  border-radius: 5px;
+}
+
+.info-item strong {
+  color: #222;
+}
+
+</style>
+{% endblock %} {% block content %}
+<div class="user-profile">
+  <div class="profile-card">
+    <h2>Your Profile</h2>
+    <div class="profile-info">
+      <div class="info-item">
+        <strong>Username:</strong> <span>{{ current_user.username }}</span>
+      </div>
+      <div class="info-item">
+        <strong>Email:</strong> <span>{{ current_user.email }}</span>
+      </div>
+      <div class="info-item">
+        <strong>Total Attempted Quizzes:</strong> <span>{{ total_attempted_quizzes }}</span>
+      </div>
+      <div class="info-item">
+        <strong>Average Score:</strong> <span>{{ average_score }}%</span>
+      </div>
+    </div>
+  </div>
+</div>
+<hr>
+
+
+  <div class="stats">
+
+    <!-- Flexbox wrapper for charts -->
+    <div class="charts-wrapper">
+      <!-- Quiz Attempt Chart -->
+      <div class="chart-container">
+        <h2 class="mb-4">📊 Your Quiz Attempt Summary</h2>
+        <canvas id="quizChart"></canvas>
+      </div>
+
+      <!-- Quiz Score Chart -->
+      <div class="chart-container">
+        <h2 class="mb-4">📊 Your Quiz Score Summary</h2>
+        <canvas id="scoreChart"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Chart.js Script -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+      // Quiz Attempts Chart
+      const ctx1 = document.getElementById("quizChart").getContext("2d");
+      new Chart(ctx1, {
+          type: "pie",
+          data: {
+              labels: {{ labels|default([])|tojson }},
+              datasets: [{
+                  label: "Quizzes Attempted",
+                  data: {{ values|default([])|tojson }},
+                  backgroundColor: ["#ff6384", "#36a2eb", "#ffce56", "#4bc0c0", "#9966ff"],
+                  borderColor: "#333",
+                  borderWidth: 1
+              }]
+          },
+          options: {
+              responsive: true,
+              maintainAspectRatio: false
+          }
+      });
+
+      // Quiz Scores Chart
+      const ctx = document.getElementById("scoreChart").getContext("2d");
+      new Chart(ctx, {
+          type: "bar",
+          data: {
+              labels: {{ quiz_labels|tojson }},
+              datasets: [{
+                  label: "Your Score",
+                  data: {{ score0|tojson }},
+                  backgroundColor: "#36a2eb",
+                  borderColor: "#333",
+                  borderWidth: 1
+              }]
+          },
+          options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              scales: {
+                  y: {
+                      min: 0,
+                      max: 6,
+                      ticks: {
+                          stepSize: 1
+                      }
+                  }
+              }
+          }
+      });
+  });
+</script>
+
+{% endblock %}
